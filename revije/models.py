@@ -32,7 +32,7 @@ class Avtor(models.Model):
 class Clanek(models.Model):
     class Kategorija(models.IntegerChoices):
         clanek = 0, 'Članek'
-        interviju = 1, 'Interviju'
+        intervju = 1, 'Intervju'
 
     revija = models.ForeignKey(Revija, on_delete=models.CASCADE)
     naslov = models.CharField(max_length=255)
