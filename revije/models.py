@@ -10,9 +10,11 @@ class Revija(models.Model):
         muska = 1, 'Muska'
         glasna = 2, 'Glasna'
 
+    from_fn = models.CharField(editable=False, null=True, blank=True, max_length=255)
     revija = models.IntegerField(choices=Type.choices, default=Type.glasbena_mladina)
     datum_izdaje = models.DateField()
-    stevilka = models.IntegerField()
+    stevilka = models.IntegerField(null=True, blank=True)
+    html = models.FileField(upload_to='revije/html', blank=True)
     pdf = models.FileField(upload_to='revije/pdf', blank=True)
     txt = models.FileField(upload_to='revije/txt', blank=True)
 
