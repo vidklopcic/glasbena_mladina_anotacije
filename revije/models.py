@@ -13,13 +13,17 @@ class Revija(models.Model):
     from_fn = models.CharField(editable=False, null=True, blank=True, max_length=255)
     revija = models.IntegerField(choices=Type.choices, default=Type.glasbena_mladina)
     datum_izdaje = models.DateField()
-    stevilka = models.IntegerField(null=True, blank=True)
-    html = models.FileField(upload_to='revije/html', blank=True)
-    pdf = models.FileField(upload_to='revije/pdf', blank=True)
-    txt = models.FileField(upload_to='revije/txt', blank=True)
+    stevilka = models.IntegerField(null=True, blank=True, verbose_name='Številka')
+    html = models.FileField(upload_to='revije/html', blank=True, verbose_name='HTML datoteka')
+    pdf = models.FileField(upload_to='revije/pdf', blank=True, verbose_name='PDF datoteka')
+    txt = models.FileField(upload_to='revije/txt', blank=True, verbose_name='TXT datoteka')
 
     def __str__(self):
         return f'{self.Type.choices[self.revija][1]} ({self.datum_izdaje.year}, {self.stevilka}.)'
+
+    class Meta:
+        verbose_name = 'Revija'
+        verbose_name_plural = 'Revije'
 
 
 class Avtor(models.Model):
@@ -27,6 +31,10 @@ class Avtor(models.Model):
 
     def __str__(self):
         return self.ime_in_priimek
+
+    class Meta:
+        verbose_name = 'Avtor'
+        verbose_name_plural = 'Avtorji'
 
 
 class Clanek(models.Model):
@@ -46,12 +54,20 @@ class Clanek(models.Model):
     def __str__(self):
         return self.naslov
 
+    class Meta:
+        verbose_name = 'Članek'
+        verbose_name_plural = 'Članki'
+
 
 class ClanekVsebina(models.Model):
     besedilo = models.TextField()
 
     def __str__(self):
         return str(self.clanek_set.first() or 'nova vsebina')
+
+    class Meta:
+        verbose_name = 'Vsebina članka'
+        verbose_name_plural = 'Vsebine člankov'
 
 
 @receiver(post_delete, sender=Clanek)
