@@ -17,6 +17,7 @@ class Revija(models.Model):
     html = models.FileField(upload_to='revije/html', blank=True, verbose_name='HTML datoteka')
     pdf = models.FileField(upload_to='revije/pdf', blank=True, verbose_name='PDF datoteka')
     txt = models.FileField(upload_to='revije/txt', blank=True, verbose_name='TXT datoteka')
+    zakljuceno = models.BooleanField(default=False, verbose_name='Zaključeno')
 
     def __str__(self):
         return f'{self.Type.choices[self.revija][1]} ({self.datum_izdaje.year}, {self.stevilka}.)'

@@ -38,8 +38,9 @@ class ClanekInline(AjaxSelectAdminStackedInline):
 
 @admin.register(Revija)
 class RevijaAdmin(admin.ModelAdmin):
-    list_display = ['revija', 'datum_izdaje', 'stevilka']
+    list_display = ['revija', 'datum_izdaje', 'stevilka', 'zakljuceno']
     inlines = [ClanekInline]
+    list_filter = ['revija', 'zakljuceno']
 
 
 @admin.register(Clanek)
