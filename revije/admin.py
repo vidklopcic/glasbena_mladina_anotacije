@@ -17,14 +17,7 @@ class AvtorAdmin(admin.ModelAdmin):
 
 class ClanekForm(forms.ModelForm):
     avtorji = AutoCompleteSelectMultipleField('avtorji', required=False, help_text=None)
-
-    def __init__(self, *args, **kwargs):
-        super(ClanekForm, self).__init__(*args, **kwargs)
-        exclude_vsebina = Clanek.objects.all()
-        if self.instance:
-            exclude_vsebina = exclude_vsebina.exclude(pk=self.instance.pk)
-        self.fields['vsebina'].queryset = ClanekVsebina.objects.exclude(id__in=exclude_vsebina.values('vsebina_id'))
-        self.fields['vsebina'].widget.can_delete_related = False
+    vsebina = forms.CharField(widget=Textarea(attrs={'rows': 30, 'cols': 150}))
 
 
 class ClanekInline(AjaxSelectAdminStackedInline):
@@ -47,10 +40,3 @@ class RevijaAdmin(admin.ModelAdmin):
 class ClanekAdmin(AjaxSelectAdmin):
     form = ClanekForm
     list_display = ['revija', 'naslov', 'podnaslov', 'kategorija']
-
-
-@admin.register(ClanekVsebina)
-class ClanekVsebinaAdmin(admin.ModelAdmin):
-    formfield_overrides = {
-        models.TextField: {'widget': Textarea(attrs={'rows': 40, 'cols': 150})},
-    }
