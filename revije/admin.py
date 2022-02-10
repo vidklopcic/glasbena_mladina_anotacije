@@ -33,6 +33,11 @@ class ClanekInline(AjaxSelectAdminStackedInline):
 class RevijaAdmin(admin.ModelAdmin):
     list_display = ['revija', 'datum_izdaje', 'stevilka', 'zakljuceno']
     inlines = [ClanekInline]
+    readonly_fields = [
+        'html',
+        'pdf',
+        'txt',
+    ]
     list_filter = ['revija', 'zakljuceno']
 
 

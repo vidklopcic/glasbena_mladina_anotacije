@@ -1,8 +1,6 @@
 from django.contrib.auth.models import User
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models.signals import post_delete
-from django.dispatch import receiver
 
 
 class Revija(models.Model):
@@ -14,7 +12,7 @@ class Revija(models.Model):
     from_fn = models.CharField(editable=False, null=True, blank=True, max_length=255)
     revija = models.IntegerField(choices=Type.choices, default=Type.glasbena_mladina)
     datum_izdaje = models.DateField()
-    letnik = models.IntegerField(validators=[MinValueValidator(1000)], null=True, blank=True)
+    letnik = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)], null=True, blank=True)
     stevilka = models.IntegerField(null=True, blank=True, verbose_name='Številka')
     html = models.FileField(upload_to='revije/html', blank=True, verbose_name='HTML datoteka')
     pdf = models.FileField(upload_to='revije/pdf', blank=True, verbose_name='PDF datoteka')
